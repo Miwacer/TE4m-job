@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1>{{ task.name }}</h1>
+    <p class="lead">
+      {{ task.description }}
+    </p>
+    <div class="d-flex">
+       <div class="p-2">
+        <strong>Deadline:</strong> {{ task.deadline|date:"Y-m-d H:i" }}
+      </div>
+
+      <div class="p-2">
+        <strong>Status:</strong>
+        {% if task.is_complete %}
+          <span class="badge bg-success">Completed</span>
+        {% else %}
+          <span class="badge bg-secondary text-white">In Progress</span>
+        {% endif %}
+      </div>
+
+      <div class="p-2">
+        <strong>Type:</strong> {{ task.task_type }}
+      </div>
+    </div>
+
+      <h4 class="pt-5">Priority:
+        <span class="badge
+          {% if task.priority == 'UR' %}bg-danger
+          {% elif task.priority == 'HI' %}bg-warning
+          {% elif task.priority == 'MD' %}bg-info
+          {% else %}bg-primary
+          {% endif %}">
+            {{ task.get_priority_display }}
+        </span>
+      </h4>
+  </div>
+{% endblock %}
