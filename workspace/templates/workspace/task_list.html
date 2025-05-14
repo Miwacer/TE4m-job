@@ -1,0 +1,10 @@
+{% extends "base.html"%}
+
+{% block content %}
+  <h1>All task</h1>
+  {% for task in task_list.all %}
+    <a href="{% url 'workspace:task-detail' pk=task.pk %}">
+      <p>{{ task.name }}</p>
+    </a>
+  {% endfor %}
+{% endblock %}
