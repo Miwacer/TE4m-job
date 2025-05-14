@@ -47,7 +47,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "team-job",
+    "workspace",
 ]
 
 ROOT_URLCONF = "te4m_job.urls"
@@ -122,4 +122,4 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "team-job.Worker"
+AUTH_USER_MODEL = "workspace.Worker"
