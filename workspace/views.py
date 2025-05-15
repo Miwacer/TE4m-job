@@ -2,8 +2,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
-from .models import Task, TaskType, Worker, Position
+
+from .forms import TaskForm
+from .models import (
+    Task,
+    TaskType,
+    Worker,
+    Position,
+    Project,
+)
 
 
 @login_required
@@ -26,14 +35,8 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
-    fields = [
-        "name",
-        "description",
-        "deadline",
-        "priority",
-        "task_type",
-        "assignees",
-    ]
+    form_class = TaskForm
+
 
 class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     model = TaskType
@@ -61,3 +64,21 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
 
+
+class ProjectListView(LoginRequiredMixin, generic.ListView):
+    model = Project
+
+
+class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Project
+
+
+class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Project
+    fields = [
+        "name",
+        "description",
+        "team",
+        "tasks",
+    ]
+    success_url = reverse_lazy("workspace:project-list")
