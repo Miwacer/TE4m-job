@@ -24,7 +24,6 @@ class Worker(AbstractUser):
     )
 
 
-
 class Task(models.Model):
     STATUS = (
         ("UR", "Urgent"),
@@ -44,4 +43,22 @@ class Task(models.Model):
     assignees = models.ManyToManyField(
         'Worker',
         related_name="assignees",
+    )
+
+
+class Project(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    team = models.ForeignKey("Team", on_delete=models.CASCADE)
+    tasks = models.ManyToManyField(
+        Task,
+        related_name="projects",
+    )
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    members = models.ManyToManyField(
+        Worker,
+        related_name="teams",
     )
