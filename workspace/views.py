@@ -40,6 +40,12 @@ class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     template_name = "workspace/task_type_list.html"
 
 
+
+class TaskTypeDetailView(LoginRequiredMixin, generic.DetailView):
+    model = TaskType
+    template_name = "workspace/type_task_detail.html"
+
+
 class PositionListView(LoginRequiredMixin, generic.ListView):
     model = Position
 
