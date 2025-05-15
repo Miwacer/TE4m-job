@@ -53,6 +53,7 @@ class Project(models.Model):
     tasks = models.ManyToManyField(
         Task,
         related_name="projects",
+        blank=True,
     )
 
 

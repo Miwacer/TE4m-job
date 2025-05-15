@@ -4,6 +4,8 @@ from .models import (
     Task,
     TaskType,
     Position,
+    Team,
+    Project,
 )
 
 
@@ -11,6 +13,8 @@ class AuthorAdmin(admin.ModelAdmin):
     site_header = "Monty Python administration"
 
 
+admin.site.register(Team)
+admin.site.register(Project)
 admin.site.register(Task)
 admin.site.register(TaskType)
 admin.site.register(Position)
