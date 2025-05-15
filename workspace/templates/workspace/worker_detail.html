@@ -14,8 +14,8 @@
               <i class="fas fa-user fa-2x text-secondary"></i>
             </div>
             <div class="ml-3">
-              <h4 class="mb-1">{{ user.first_name }} {{ user.last_name }}</h4>
-              <span class="badge badge-info">{{ user.position }}</span>
+              <h4 class="mb-1">{{ worker.first_name }} {{ worker.last_name }}</h4>
+              <span class="badge badge-info">{{ worker.position }}</span>
             </div>
           </div>
 
@@ -24,11 +24,11 @@
           <div class="worker-details">
             <p class="mb-2">
               <strong><i class="fas fa-envelope mr-2"></i>Email:</strong>
-              <span class="text-muted">{{ user.email|default:"Not specified" }}</span>
+              <span class="text-muted">{{ worker.email|default:"Not specified" }}</span>
             </p>
             <p class="mb-0">
               <strong><i class="fas fa-calendar-alt mr-2"></i>Member since:</strong>
-              <span class="text-muted">{{ user.date_joined|date:"F Y" }}</span>
+              <span class="text-muted">{{ worker.date_joined|date:"F Y" }}</span>
             </p>
           </div>
         </div>
@@ -50,7 +50,7 @@
                 </tr>
               </thead>
               <tbody>
-                {% for task in user.assignees.all %}
+                {% for task in worker.assignees.all %}
                 <tr>
                   <td>
                     <div class="d-flex flex-column">
@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="card-footer bg-light">
-          <small class="text-muted">Total tasks: {{ user.assignees.count }}</small>
+          <small class="text-muted">Total tasks: {{ worker.assignees.count }}</small>
         </div>
       </div>
     </div>
