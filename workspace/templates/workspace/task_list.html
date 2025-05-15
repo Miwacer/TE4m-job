@@ -1,35 +1,71 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
 
 {% block content %}
-  <table class="table table-dark">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Deadline</th>
-        <th>Is complete</th>
-        <th>Task type</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for task in task_list.all %}
-      <tr>
-        <td>
-          <a href="{% url 'workspace:task-detail' pk=task.id %}" class="text-white">
-            {{ task.name }}
-          </a>
-        </td>
-        <td>{{ task.deadline }}</td>
-        <td>
-          {% if task.is_complete %}
-            ✅
-          {% else %}
-            ❌
-          {% endif %}
-        </td>
-        <td>{{ task.task_type }}</td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">All Tasks</h2>
+    <a href="{% url 'workspace:task-create' %}" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Add New Task
+    </a>
+  </div>
+
+  <div class="card shadow">
+    <div class="card-header bg-dark text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <span><i class="fas fa-tasks mr-2"></i>Task List</span>
+        <span class="badge badge-light">{{ task_list.count }} tasks</span>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover table-striped mb-0">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Deadline</th>
+            <th scope="col" class="text-center">Status</th>
+            <th scope="col">Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in task_list.all %}
+          <tr class="{% if task.is_complete %}table-success{% elif task.deadline < current_date %}table-danger{% endif %}">
+            <td>
+              <a href="{% url 'workspace:task-detail' pk=task.id %}" class="{% if task.is_complete %}text-success{% else %}text-dark{% endif %} font-weight-bold">
+                {{ task.name }}
+              </a>
+            </td>
+            <td>
+              <span class="{% if task.deadline < current_date and not task.is_complete %}text-danger font-weight-bold{% endif %}">
+                {{ task.deadline|date:"M d, Y H:i" }}
+              </span>
+            </td>
+            <td class="text-center">
+              {% if task.is_complete %}
+                <span class="badge badge-success">Completed</span>
+              {% else %}
+                <span class="badge badge-warning">Pending</span>
+              {% endif %}
+            </td>
+            <td>
+              <span class="badge badge-info">{{ task.task_type }}</span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer bg-light">
+      <div class="d-flex justify-content-between">
+        <small class="text-muted">Updated: {% now "SHORT_DATETIME_FORMAT" %}</small>
+        <div>
+          <span class="badge badge-success mr-2">Completed: {{ completed_tasks }}</span>
+          <span class="badge badge-warning">Pending: {{ pending_tasks }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
