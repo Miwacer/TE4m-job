@@ -18,6 +18,7 @@ from .views import (
     ProjectListView,
     ProjectCreateView,
     ProjectDetailView,
+    delete_member_from_team,
 )
 
 
@@ -45,4 +46,5 @@ urlpatterns = [
     path("team/create/", TeamCreateView.as_view(), name="team-create"),
     path("team/<int:pk>/update", TeamUpdateView.as_view(), name="team-update"),
     path("team/<int:pk>/delete", TeamDeleteView.as_view(), name="team-delete"),
+    path("remove-member/<int:team_id>/<int:member_id>/", delete_member_from_team, name="remove-member"),
 ]
