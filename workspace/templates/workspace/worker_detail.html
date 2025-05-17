@@ -47,7 +47,9 @@
                 <tr>
                   <th>Task</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  {% if worker == user %}
+                  	<th>Action</th>
+                  {% endif %}
                 </tr>
               </thead>
               <tbody>
@@ -66,15 +68,17 @@
                     <span class="badge badge-pill badge-warning">Pending</span>
                     {% endif %}
                   </td>
+                  {% if worker == user %}
                   <td>
-                   <a href="{% url 'workspace:toggle-status' user_id=worker.id task_id=task.pk %}"
-                       class="btn btn-sm {% if task.is_complete %}btn-outline-warning{% else %}btn-outline-success{% endif %}">
-                      {% if task.is_complete %}
-                        <i class="fas fa-undo"></i> Reopen
-                      {% else %}
-                        <i class="fas fa-check"></i> Complete
-                      {% endif %}
-                    </a>
+                     <a href="{% url 'workspace:toggle-status' user_id=worker.id task_id=task.pk %}"
+                         class="btn btn-sm {% if task.is_complete %}btn-outline-warning{% else %}btn-outline-success{% endif %}">
+                        {% if task.is_complete %}
+                          <i class="fas fa-undo"></i> Reopen
+                        {% else %}
+                          <i class="fas fa-check"></i> Complete
+                        {% endif %}
+                      </a>
+                  {% endif %}
                   </td>
                 </tr>
                 {% endfor %}
