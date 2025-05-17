@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     "workspace",
     "crispy_forms",
     "crispy_bootstrap4",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -133,3 +135,7 @@ AUTH_USER_MODEL = "workspace.Worker"
 LOGIN_REDIRECT_URL = '/'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

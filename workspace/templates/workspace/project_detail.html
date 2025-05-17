@@ -32,7 +32,7 @@
                             <ul class="list-unstyled">
                                 <li class="mb-2">
                                     <strong><i class="fas fa-users mr-2"></i>Team:</strong>
-                                    <a href="#" class="text-primary">
+                                    <a href="{% url 'workspace:team-detail' pk=project.team.id %}" class="text-primary">
                                         {{ project.team.name }}
                                     </a>
                                 </li>
@@ -133,16 +133,4 @@
         </div>
     </div>
 </div>
-
-  <style>
-    .card {
-        border-radius: 0.5rem;
-    }
-    .table th {
-        border-top: none;
-    }
-    .lead {
-        font-size: 1.1rem;
-    }
-  </style>
 {% endblock %}

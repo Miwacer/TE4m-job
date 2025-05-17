@@ -28,10 +28,15 @@ def index(request: HttpRequest) -> HttpResponse:
 
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
+    queryset = Task.objects.all().select_related("task_type")
 
 
 class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
+    queryset = (
+        Task.objects.all().prefetch_related(
+            "assignees__position").select_related("task_type")
+    )
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
@@ -43,7 +48,6 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
 class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     model = TaskType
     template_name = "workspace/task_type_list.html"
-
 
 
 class TaskTypeDetailView(LoginRequiredMixin, generic.DetailView):
@@ -61,18 +65,22 @@ class PositionDetailView(LoginRequiredMixin, generic.DetailView):
 
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
+    queryset = Worker.objects.all().select_related("position")
 
 
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
+    queryset = Worker.objects.all().select_related("position")
 
 
 class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Project
+    queryset = Project.objects.all().prefetch_related("tasks").select_related("team")
 
 
 class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
     model = Project
+    queryset = Project.objects.all().select_related("team").prefetch_related("tasks")
 
 
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
@@ -88,11 +96,12 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
 
 class TeamListView(LoginRequiredMixin, generic.ListView):
     model = Team
+    queryset = Team.objects.all().prefetch_related("members")
 
 
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
-
+    queryset = Team.objects.all().prefetch_related("members__position")
 
 class TeamDeleteView(generic.DeleteView):
     model = Team
