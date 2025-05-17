@@ -5,13 +5,14 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import TaskForm
+from .forms import TaskForm, TeamForm
 from .models import (
     Task,
     TaskType,
     Worker,
     Position,
     Project,
+    Team,
 )
 
 
@@ -36,6 +37,7 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
+    success_url = reverse_lazy("workspace:task-list")
 
 
 class TaskTypeListView(LoginRequiredMixin, generic.ListView):
@@ -82,3 +84,28 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
         "tasks",
     ]
     success_url = reverse_lazy("workspace:project-list")
+
+
+class TeamListView(LoginRequiredMixin, generic.ListView):
+    model = Team
+
+
+class TeamDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Team
+
+
+class TeamDeleteView(generic.DeleteView):
+    model = Team
+    success_url = reverse_lazy("workspace:team-list")
+
+
+class TeamUpdateView(generic.UpdateView):
+    model = Team
+    form_class = TeamForm
+    success_url = reverse_lazy("workspace:team-list")
+
+
+class TeamCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Team
+    form_class = TeamForm
+    success_url = reverse_lazy("workspace:team-list")
