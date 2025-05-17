@@ -17,11 +17,11 @@ from .models import (
 
 
 @login_required
-def index(request: HttpRequest) -> HttpResponse:
-    user = request.user
-
+def index(request):
     context = {
-        "user": user,
+        'urgent_tasks': Task.objects.filter(priority='UR').order_by('deadline')[:5],
+        'projects': Project.objects.all().order_by('-id')[:5],
+        'teams': Team.objects.all(),
     }
     return render(request, 'workspace/index.html', context)
 
@@ -120,6 +120,7 @@ class TeamCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy("workspace:team-list")
 
 
+@login_required
 def delete_member_from_team(request, team_id: int, member_id: int):
     team = Team.objects.get(id=team_id)
     team.members.remove(member_id)
