@@ -29,7 +29,7 @@ def index(request):
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     queryset = Task.objects.all().select_related("task_type")
-
+    paginate_by = 12
 
 class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
@@ -66,6 +66,7 @@ class PositionDetailView(LoginRequiredMixin, generic.DetailView):
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
     queryset = Worker.objects.all().select_related("position")
+    paginate_by = 12
 
 
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
@@ -76,6 +77,7 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
 class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Project
     queryset = Project.objects.all().prefetch_related("tasks").select_related("team")
+    paginate_by = 6
 
 
 class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
