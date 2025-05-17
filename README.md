@@ -1,26 +1,33 @@
-💼 TE4am Job
-👨‍💻 IT Manager Panel
-Welcome to the TE4am Job system — a collaborative task and team management tool.
+# 💼 TE4am Job  
+## 👨‍💻 IT Manager Panel
 
-🔐 Authentication
-🔑 Log in to the system.
+Welcome to the **TE4am Job** system — a collaborative task and team management tool.
 
-📋 Task Management
-✅ Receive tasks assigned to you.
+---
 
-🔄 Change task status to "Completed" or reopen already completed tasks.
+## 🔐 Authentication
 
-🆕 Create tasks for your colleagues or update existing ones.
+- 🔑 **Log in** to the system.
 
-👥 Team Management
-🛠️ Create and edit teams.
+---
 
-🚪 Leave teams or 👢 remove team members.
+## 📋 Task Management
 
-📂 Project Overview
-📁 View project tasks.
+- ✅ **Receive tasks** assigned to you.
+- 🔄 **Change task status** to "Completed" or reopen them.
+- 🆕 **Create tasks** for your colleagues or update existing ones.
 
-🧾 Browse the list of positions.
+---
 
-🏷️ View task types and see all tasks associated with each type.
+## 👥 Team Management
 
+- 🛠️ **Create and edit teams.**
+- 🚪 **Leave teams** or 👢 **remove team members.**
+
+---
+
+## 📂 Project Overview
+
+- 📁 **View project tasks.**
+- 🧾 **Browse the list of positions.**
+- 🏷️ **View task types** and see all tasks associated with each type.
