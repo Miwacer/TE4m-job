@@ -45,7 +45,7 @@
                 </td>
                 <td>{{ member.email|default:"-" }}</td>
                 <td>
-                  <a href="#" class="btn btn-sm btn-outline-danger"
+                  <a href="{% url 'workspace:remove-member'  team_id=team.pk member_id=member.pk %}" class="btn btn-sm btn-outline-danger"
                      title="Remove from team">
                     <i class="fas fa-user-minus"></i>
                   </a>

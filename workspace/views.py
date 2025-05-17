@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -109,3 +109,10 @@ class TeamCreateView(LoginRequiredMixin, generic.CreateView):
     model = Team
     form_class = TeamForm
     success_url = reverse_lazy("workspace:team-list")
+
+
+def delete_member_from_team(request, team_id: int, member_id: int):
+    team = Team.objects.get(id=team_id)
+    team.members.remove(member_id)
+
+    return redirect("workspace:team-detail", team_id)
