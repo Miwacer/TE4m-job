@@ -126,3 +126,12 @@ def delete_member_from_team(request, team_id: int, member_id: int):
     team.members.remove(member_id)
 
     return redirect("workspace:team-detail", team_id)
+
+
+@login_required
+def toggle_status_complete(request, task_id: int, user_id: int):
+    task = Task.objects.get(id=task_id)
+    task.is_complete = not task.is_complete
+    task.save()
+
+    return redirect("workspace:worker-detail", user_id)
