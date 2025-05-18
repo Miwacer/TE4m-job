@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -104,6 +103,7 @@ class TeamListView(LoginRequiredMixin, generic.ListView):
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
     queryset = Team.objects.all().prefetch_related("members__position")
+
 
 class TeamDeleteView(generic.DeleteView):
     model = Team
