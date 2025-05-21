@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mb-0">{{ task.name }}</h1>
+        <span class="badge
+          {% if task.priority == 'UR' %}badge-danger
+          {% elif task.priority == 'HI' %}badge-warning
+          {% elif task.priority == 'MD' %}badge-info
+          {% else %}badge-secondary
+          {% endif %}">
+          {{ task.get_priority_display }}
+        </span>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="mb-4">
+        <h4 class="text-muted mb-3">Description</h4>
+        <p class="lead border-left pl-3" style="border-left: 3px solid #007bff!important;">
+          {{ task.description }}
+        </p>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h5 class="card-title"><i class="far fa-calendar-alt mr-2"></i>Deadline</h5>
+              <p class="card-text h5">
+                {{ task.deadline|date:"Y-m-d H:i" }}
+                {% if task.is_overdue and not task.is_complete %}
+                  <span class="badge badge-danger ml-2">Overdue</span>
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-tasks mr-2"></i>Status</h5>
+              <p class="card-text h5">
+                {% if task.is_complete %}
+                  <span class="badge badge-success">Completed</span>
+                {% else %}
+                  <span class="badge badge-secondary">In Progress</span>
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-tag mr-2"></i>Type</h5>
+              <p class="card-text h5">
+                <span class="badge badge-info">{{ task.task_type }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="assignees-section">
+        <h4 class="mb-3"><i class="fas fa-users mr-2"></i>Assignees</h4>
+        {% if task.assignees.all %}
+          <div class="row">
+            {% for worker in task.assignees.all %}
+              <div class="col-md-4 mb-3">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <div class="avatar mb-2" style="width: 60px; height: 60px; background-color: #007bff; color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px;">
+                      {{ worker.first_name|first }}{{ worker.last_name|first }}
+                    </div>
+                    <h5 class="card-title mb-1">{{ worker.first_name }} {{ worker.last_name }}</h5>
+                    <p class="card-text text-muted small">{{ worker.position }}</p>
+                    <a href="{% url 'workspace:worker-detail' pk=worker.id %}" class="btn btn-sm btn-outline-primary">View Profile</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            No assignees for this task
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card-footer bg-light">
+      <a href="{% url 'workspace:task-list' %}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left mr-2"></i>Back to all tasks
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

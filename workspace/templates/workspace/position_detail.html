@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-light">
+      <h2 class="mb-0">
+        <i class="fas fa-user-tag mr-2 text-primary"></i>
+        Position: {{ position.name }}
+      </h2>
+    </div>
+
+    <div class="card-body">
+      <h4 class="mb-3">Users with this position</h4>
+
+      {% if position.workers.all %}
+        <div class="list-group">
+          {% for user in position.workers.all %}
+            <a href="{% url 'workspace:worker-detail' pk=user.id %}"
+               class="list-group-item list-group-item-action">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>
+                  <i class="fas fa-user mr-2"></i>
+                  {{ user.first_name }} {{ user.last_name }}
+                </span>
+                <small class="text-muted">{{ user.email }}</small>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle mr-2"></i>
+          No users currently have this position.
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="card-footer bg-light">
+      <a href="{% url 'workspace:position-list' %}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left mr-2"></i>Back to all positions
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

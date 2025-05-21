@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Type task</h2>
+  <div class="row">
+    {% for type in tasktype_list.all %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fas fa-tasks mr-2"></i>
+              <a href="{% url 'workspace:task-type-detail' pk=type.id %}">
+                {{ type.name }}
+              </a>
+            </h5>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col">
+        <p class="text-muted">There are no available task types.</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
