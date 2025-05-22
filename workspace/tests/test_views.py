@@ -43,7 +43,7 @@ class TestToggleTaskStatusView(TestCase):
 
     def test_toggle_status_complete(self):
         url = reverse("workspace:toggle-status", args=[self.user.id, self.task.id])
-        response = self.client.get(url)
+        response = self.client.post(url)
 
         self.task.refresh_from_db()
 
@@ -61,7 +61,7 @@ class DeleteMemberTeamView(TestCase):
 
     def test_delete_team_member(self):
         url = reverse("workspace:remove-member", args=[self.team.id, self.member.id])
-        response = self.client.get(url)
+        response = self.client.post(url)
         self.member.refresh_from_db()
 
         self.assertNotIn(self.member, self.team.members.all())

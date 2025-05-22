@@ -45,10 +45,12 @@
                 </td>
                 <td>{{ member.email|default:"-" }}</td>
                 <td>
-                  <a href="{% url 'workspace:remove-member'  team_id=team.pk member_id=member.pk %}" class="btn btn-sm btn-outline-danger"
-                     title="Remove from team">
-                    <i class="fas fa-user-minus"></i>
-                  </a>
+                  <form action="{% url 'workspace:remove-member'  team_id=team.pk member_id=member.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                      <i class="fas fa-user-minus"></i>
+                    </button>
+                  </form>
                 </td>
               </tr>
               {% endfor %}

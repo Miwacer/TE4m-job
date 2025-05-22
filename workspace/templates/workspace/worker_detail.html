@@ -70,14 +70,16 @@
                   </td>
                   {% if worker == user %}
                   <td>
-                     <a href="{% url 'workspace:toggle-status' user_id=worker.id task_id=task.pk %}"
-                         class="btn btn-sm {% if task.is_complete %}btn-outline-warning{% else %}btn-outline-success{% endif %}">
-                        {% if task.is_complete %}
-                          <i class="fas fa-undo"></i> Reopen
-                        {% else %}
-                          <i class="fas fa-check"></i> Complete
-                        {% endif %}
-                      </a>
+                    <form action="{% url 'workspace:toggle-status' user_id=worker.id task_id=task.pk %}" method="post">
+                    {% csrf_token %}
+                      <button type="submit"  class="btn btn-sm {% if task.is_complete %}btn-outline-warning{% else %}btn-outline-success{% endif %}">
+                         {% if task.is_complete %}
+                            <i class="fas fa-undo"></i> Reopen
+                          {% else %}
+                            <i class="fas fa-check"></i> Complete
+                          {% endif %}
+                      </button>
+                    </form>
                   {% endif %}
                   </td>
                 </tr>

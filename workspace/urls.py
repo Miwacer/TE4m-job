@@ -18,8 +18,8 @@ from .views import (
     ProjectListView,
     ProjectCreateView,
     ProjectDetailView,
-    delete_member_from_team,
-    toggle_status_complete,
+    DeleteMemberFromTeamView,
+    ToggleStatusCompleteView,
 )
 
 
@@ -73,12 +73,12 @@ urlpatterns = [
     ),
     path(
         "remove-member/<int:team_id>/<int:member_id>/",
-        delete_member_from_team,
+        DeleteMemberFromTeamView.as_view(),
         name="remove-member"
     ),
     path(
         "toggle-status/<int:user_id>/<int:task_id>/",
-        toggle_status_complete,
+        ToggleStatusCompleteView.as_view(),
         name="toggle-status"
     )
 ]

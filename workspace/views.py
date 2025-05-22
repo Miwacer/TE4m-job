@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
 
 from .forms import TaskForm, TeamForm
 from .models import (
@@ -122,18 +122,17 @@ class TeamCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy("workspace:team-list")
 
 
-@login_required
-def delete_member_from_team(request, team_id: int, member_id: int):
-    team = Team.objects.get(id=team_id)
-    team.members.remove(member_id)
+class DeleteMemberFromTeamView(LoginRequiredMixin, View):
+    def post(self, request, team_id: int, member_id: int, *args, **kwargs):
+        team = get_object_or_404(Team, id=team_id)
+        team.members.remove(member_id)
+        return redirect("workspace:team-detail",team_id)
 
-    return redirect("workspace:team-detail", team_id)
 
+class ToggleStatusCompleteView(LoginRequiredMixin, View):
+    def post(self, request, task_id: int, user_id: int, *args, **kwargs):
+        task = Task.objects.get(id=task_id)
+        task.is_complete = not task.is_complete
+        task.save()
 
-@login_required
-def toggle_status_complete(request, task_id: int, user_id: int):
-    task = Task.objects.get(id=task_id)
-    task.is_complete = not task.is_complete
-    task.save()
-
-    return redirect("workspace:worker-detail", user_id)
+        return redirect("workspace:worker-detail", user_id)
