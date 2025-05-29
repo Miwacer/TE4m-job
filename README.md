@@ -39,4 +39,19 @@
 - Priorities: **Urgent**, **High**, **Medium**, **Low**
 - Tasks have types and can be linked to one or more projects
 
+## ⚙️ Installation
+
+   ```bash
+- git clone https://github.com/miwacer/Te4am_job.git
+- cd Te4am_job
+- python -m venv venv
+- source venv/bin/activate  # or `venv\Scripts\activate` on Windows
+- pip install -r requirements.txt
+- python manage.py migrate
+- python manage.py runserver
+
+## 👤 Test User
+
+- Username: miwa  
+- Password: 1234
 ---
